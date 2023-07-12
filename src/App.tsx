@@ -1,58 +1,34 @@
-import { Box, Flex, Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import { useState } from "react";
-import GameGrid from "./components/GameGrid";
-import GameHeading from "./components/GameHeading";
-import GenreList from "./components/GenreList";
-import NavBar from "./components/NavBar";
-import PlatformSelector from "./components/PlatformSelector";
-import SortSelector from "./components/SortSelector";
-import { Platform } from "./hooks/useGames";
-import { Genre } from "./hooks/useGenres";
-
-
-export interface GameQuery { 
-  genre: Genre | null;
-  platform: Platform | null;
-  sortOrder: string;
-  searchText: string;
-}
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import './App.css'
 
 function App() {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
-  
+  const [count, setCount] = useState(0)
+
   return (
-    <Grid
-      templateAreas={{
-        base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
-      }}
-      templateColumns={{
-        base: '1fr',
-        lg: '250px 1fr'
-      }}
-    >
-      <GridItem area="nav">
-        <NavBar onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })} />
-      </GridItem>
-      <Show above="lg">
-        <GridItem area="aside" paddingX={5}>
-          <GenreList selectedGenre={gameQuery.genre} onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre})} />
-        </GridItem>
-      </Show>
-      <GridItem area="main">
-        <Box paddingLeft={2}>
-          <GameHeading gameQuery={gameQuery} />
-          <Flex marginBottom={5}>
-            <Box marginRight={5}>
-              <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={(platform) => setGameQuery({ ...gameQuery, platform}) } />
-            </Box>
-            <SortSelector sortOrder={gameQuery.sortOrder} onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })} />
-          </Flex>
-        </Box>
-        <GameGrid gameQuery={gameQuery} />
-      </GridItem>
-    </Grid>
-  );
+    <div className="App">
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://reactjs.org" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </div>
+  )
 }
 
-export default App;
+export default App
